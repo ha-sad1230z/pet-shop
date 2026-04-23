@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ của tôi - PetShop</title>
+    <!-- Google Fonts/CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-paw"></i> PetShop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="cart.html" class="nav-link cart-icon">
+                            <i class="fa-solid fa-cart-shopping fs-5"></i>
+                            <span class="cart-badge" id="cart-count" style="display: none;">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-3" id="userMenuContainer"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container py-5 mb-5">
+        <h2 class="fw-bold mb-4">Hồ sơ của tôi</h2>
+        
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 text-center">
+                    <div class="card-body p-4">
+                        <img id="profile-img" src="" class="rounded-circle mb-3 border border-3 border-light shadow-sm" width="120" height="120" alt="Avatar">
+                        <h4 class="fw-bold mb-1" id="profile-name">Tên người dùng</h4>
+                        <p class="text-muted small mb-4" id="profile-role">Khách hàng</p>
+                        <div class="d-grid gap-2">
+                            <a href="orders.html" class="btn btn-outline-primary"><i class="fa-solid fa-box-open me-2"></i>Đơn hàng của tôi</a>
+                            <button class="btn btn-outline-danger" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Đăng xuất</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4 pb-2 border-bottom">Thông tin cá nhân</h5>
+                        <form id="profileForm" onsubmit="event.preventDefault(); alert('Cập nhật hồ sơ thành công! (Dữ liệu giả)');">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Họ và tên</label>
+                                    <input type="text" class="form-control" id="form-name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Địa chỉ Email</label>
+                                    <input type="email" class="form-control" id="form-email" readonly>
+                                    <small class="text-muted">Email không thể thay đổi.</small>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Tên đăng nhập</label>
+                                    <input type="text" class="form-control" id="form-username" readonly>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Số điện thoại (Tuỳ chọn)</label>
+                                    <input type="text" class="form-control" placeholder="+1 234 567 8900">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary px-4">Lưu thay đổi</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 mt-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4 pb-2 border-bottom">Đổi mật khẩu</h5>
+                        <form id="changePasswordForm">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Mật khẩu cũ</label>
+                                    <input type="password" class="form-control" id="old-password" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Mật khẩu mới</label>
+                                    <input type="password" class="form-control" id="new-password" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Nhập lại mật khẩu mới</label>
+                                    <input type="password" class="form-control" id="confirm-password" required>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-warning px-4">Đổi mật khẩu</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto">
+        <div class="container text-center text-muted pb-4 border-top pt-4">
+            <small>&copy; 2026 PetShop. Bản quyền thuộc về PetShop.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('userMenuContainer').innerHTML = `
+                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 active" href="#" data-bs-toggle="dropdown">
+                    <img src="https://ui-avatars.com/api/?name=${user.fullName}&background=random" class="rounded-circle" width="32" height="32" alt="User">
+                    <span>${user.fullName}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    ${(user.role === 'ADMIN' || user.role === 'STAFF') ? '<li><a class="dropdown-item" href="admin-dashboard.html"><i class="fa-solid fa-gauge me-2"></i> Bảng điều khiển</a></li>' : ''}
+                    <li><a class="dropdown-item active" href="profile.html"><i class="fa-regular fa-user me-2"></i> Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="orders.html"><i class="fa-solid fa-box-open me-2"></i> Đơn hàng</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="logout(); return false;"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng xuất</a></li>
+                </ul>
+            `;
+
+            document.getElementById('profile-img').src = `https://ui-avatars.com/api/?name=${user.fullName}&background=random&size=120`;
+            document.getElementById('profile-name').textContent = user.fullName;
+            document.getElementById('profile-role').textContent = user.role.toUpperCase();
+
+            document.getElementById('form-name').value = user.fullName;
+            document.getElementById('form-email').value = user.email;
+            document.getElementById('form-username').value = user.username;
+
+            document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const oldPassword = document.getElementById('old-password').value;
+                const newPassword = document.getElementById('new-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                if (newPassword !== confirmPassword) {
+                    alert('Mật khẩu mới và Nhập lại mật khẩu không khớp!');
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    alert('Mật khẩu mới phải có ít nhất 6 ký tự!');
+                    return;
+                }
+
+                try {
+                    const data = await fetchAPI('/auth/change-password', {
+                        method: 'POST',
+                        body: JSON.stringify({ oldPassword, newPassword })
+                    });
+                    
+                    alert('Đổi mật khẩu thành công!');
+                    document.getElementById('changePasswordForm').reset();
+                } catch (error) {
+                    alert(error.message || 'Lỗi hệ thống khi đổi mật khẩu.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

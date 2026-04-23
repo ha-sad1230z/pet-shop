@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm - PetShop</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-paw"></i> PetShop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="products.html">Sản phẩm</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="cart.html" class="nav-link cart-icon">
+                            <i class="fa-solid fa-cart-shopping fs-5"></i>
+                            <span class="cart-badge" id="cart-count" style="display: none;">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-3" id="userMenuContainer">
+                        <!-- User menu will be injected here via JS -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="bg-white py-4 shadow-sm mb-4">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <h2 class="fw-bold mb-3 mb-md-0">Tất cả sản phẩm</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-muted">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container py-4 mb-5">
+        <div class="row g-4">
+            
+            <!-- Sidebar / Filters -->
+            <div class="col-lg-3">
+                <div class="card border-0 shadow-sm sticky-top" style="top: 100px; z-index: 10;">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">Bộ lọc</h5>
+                        
+                        <!-- Search Form -->
+                        <form id="searchForm" class="mb-4">
+                            <div class="input-group">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm..." aria-label="Search">
+                                <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+
+                        <!-- Category Filter -->
+                        <h6 class="fw-bold mb-3">Danh mục</h6>
+                        <div class="list-group list-group-flush border-0" id="category-filter-list">
+                            <!-- Categories will be injected here via JS -->
+                            <a href="products.html" class="list-group-item list-group-item-action border-0 px-0 d-flex justify-content-between align-items-center text-muted">
+                                Tất cả danh mục
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <span id="products-count" class="text-muted fw-semibold">Đang tải biểu mẫu...</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-muted small text-nowrap">Sắp xếp theo:</span>
+                        <select id="sort-select" class="form-select form-select-sm shadow-none" style="width: auto;">
+                            <option value="featured">Nổi bật</option>
+                            <option value="price-asc">Giá: Thấp đến Cao</option>
+                            <option value="price-desc">Giá: Cao đến Thấp</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-4" id="products-grid">
+                    <!-- Products injected via JS -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <footer class="mt-auto">
+        <div class="container">
+            <hr class="my-4 text-muted">
+            <div class="text-center text-muted pb-4">
+                <small>&copy; 2026 PetShop. Bản quyền thuộc về PetShop.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderUserMenu();
+            renderProductsPage();
+
+            // Set up search form submission
+            document.getElementById('searchForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const term = document.getElementById('searchInput').value.trim();
+                const currentUrl = new URL(window.location.href);
+                if (term) {
+                    currentUrl.searchParams.set('search', term);
+                } else {
+                    currentUrl.searchParams.delete('search');
+                }
+                window.location.href = currentUrl.toString();
+            });
+
+            // Pre-fill search input if present
+            const params = new URLSearchParams(window.location.search);
+            const searchParam = params.get('search');
+            if (searchParam) {
+                document.getElementById('searchInput').value = searchParam;
+            }
+        });
+
+        // Duplicated from index.html for simplicity - in a real app use components
+        function renderUserMenu() {
+            const user = getCurrentUser();
+            const container = document.getElementById('userMenuContainer');
+            if (user) {
+                container.innerHTML = `
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=${user.fullName}&background=random" class="rounded-circle" width="32" height="32" alt="User">
+                        <span>${user.fullName}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="navbarDropdown">
+                        ${(user.role === 'ADMIN' || user.role === 'STAFF') ? '<li><a class="dropdown-item" href="admin-dashboard.html"><i class="fa-solid fa-gauge me-2"></i> Bảng điều khiển</a></li>' : ''}
+                        <li><a class="dropdown-item" href="profile.html"><i class="fa-regular fa-user me-2"></i> Hồ sơ</a></li>
+                        <li><a class="dropdown-item" href="orders.html"><i class="fa-solid fa-box-open me-2"></i> Đơn hàng</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="logout(); return false;"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng xuất</a></li>
+                    </ul>
+                `;
+            } else {
+                container.innerHTML = `
+                    <a href="login.html" class="btn btn-outline-primary rounded-pill px-4">Đăng nhập</a>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

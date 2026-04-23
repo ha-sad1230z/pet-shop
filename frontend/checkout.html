@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán - PetShop</title>
+    <!-- Google Fonts/CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-paw"></i> PetShop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="cart.html" class="nav-link cart-icon">
+                            <i class="fa-solid fa-cart-shopping fs-5"></i>
+                            <span class="cart-badge" id="cart-count" style="display: none;">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-3" id="userMenuContainer"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container py-5 mb-5">
+        <div id="checkout-form">
+            <h2 class="fw-bold mb-4">Thanh toán</h2>
+            <div class="row g-4 d-flex flex-md-row flex-column-reverse">
+                <!-- Shipping && Payment -->
+                <div class="col-lg-8">
+                    <div class="bg-white rounded-4 shadow-sm p-4 mb-4">
+                        <h5 class="fw-bold mb-4 border-bottom pb-2">Thông tin giao hàng</h5>
+                        <form id="paymentForm" onsubmit="processCheckout(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Tên</label>
+                                    <input type="text" class="form-control" required id="fName">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Họ</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="address" required placeholder="123 Đường Nam Kỳ Khởi Nghĩa">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Thành phố</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Tỉnh/Thành</label>
+                                    <select class="form-select" required>
+                                        <option value="">Chọn...</option>
+                                        <option>Hà Nội</option>
+                                        <option>Hồ Chí Minh</option>
+                                        <option>Đà Nẵng</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label fw-semibold">Mã bưu điện</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <h5 class="fw-bold mt-5 mb-4 border-bottom pb-2">Phương thức thanh toán</h5>
+                            <div class="mb-3">
+                                <select class="form-select" id="paymentMethod" required>
+                                    <option value="Credit Card">Thẻ tín dụng</option>
+                                    <option value="PayPal">PayPal</option>
+                                    <option value="Cash on Delivery">Thanh toán khi nhận hàng</option>
+                                </select>
+                            </div>
+
+                            <div class="d-none" id="credit-card-info">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Tên trên thẻ</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Số thẻ tín dụng</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-semibold">Ngày hết hạn</label>
+                                        <input type="text" class="form-control" placeholder="MM/YY">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-semibold">Mã bảo mật (CVV)</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+                            <button class="btn btn-primary w-100 py-3 fw-bold shadow-sm" type="submit">Đặt hàng</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Small Order Summary -->
+                <div class="col-lg-4 pb-4">
+                    <div class="card border-0 shadow-sm rounded-4 sticky-top" style="top: 100px;">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4">Đơn hàng của bạn</h5>
+                            <div id="checkout-summary-items"></div>
+                            <hr class="my-3 border-light">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Tổng phụ</span>
+                                <span id="co-subtotal" class="fw-semibold"></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">Thuế (8%)</span>
+                                <span id="co-tax" class="fw-semibold"></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold">Tổng cộng</span>
+                                <strong id="co-total" class="text-primary-custom fs-5"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="checkout-success" class="d-none text-center py-5 bg-white rounded-4 shadow-sm">
+            <div class="mb-4">
+                <i class="fa-solid fa-circle-check text-success" style="font-size: 5rem;"></i>
+            </div>
+            <h2 class="fw-bold mb-3">Đặt hàng thành công!</h2>
+            <p class="text-muted mb-4 fs-5">Cảm ơn bạn đã mua sắm tại PetShop. Người bạn lông xù của bạn sẽ rất thích!</p>
+            <a href="orders.html" class="btn btn-primary px-4 py-2 me-2">Xem đơn hàng của tôi</a>
+            <a href="index.html" class="btn btn-outline-secondary px-4 py-2">Quay về Trang chủ</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto">
+        <div class="container text-center text-muted pb-4 border-top pt-4">
+            <small>&copy; 2026 PetShop. Bản quyền thuộc về PetShop.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/order.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = getCurrentUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Fill user info
+            const nameParts = user.fullName.split(' ');
+            document.getElementById('fName').value = nameParts[0] || '';
+            document.querySelectorAll('input')[1].value = nameParts.slice(1).join(' ') || '';
+
+            // Render Nav
+            document.getElementById('userMenuContainer').innerHTML = `
+                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
+                    <img src="https://ui-avatars.com/api/?name=${user.fullName}&background=random" class="rounded-circle" width="32" height="32" alt="User">
+                    <span>${user.fullName}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    ${(user.role === 'ADMIN' || user.role === 'STAFF') ? '<li><a class="dropdown-item" href="admin-dashboard.html"><i class="fa-solid fa-gauge me-2"></i> Bảng điều khiển</a></li>' : ''}
+                    <li><a class="dropdown-item" href="profile.html"><i class="fa-regular fa-user me-2"></i> Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="orders.html"><i class="fa-solid fa-box-open me-2"></i> Đơn hàng</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="logout(); return false;"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng xuất</a></li>
+                </ul>
+            `;
+
+            const cart = await getCartFromServer();
+            if (cart.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+
+            // Populate summary
+            const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+            const tax = subtotal * 0.08;
+            
+            document.getElementById('checkout-summary-items').innerHTML = cart.map(item => `
+                <div class="d-flex justify-content-between text-muted mb-2 small">
+                    <span class="text-truncate" style="max-width: 200px;">${item.quantity}x ${item.name}</span>
+                    <span>${formatCurrency(item.price * item.quantity)}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('co-subtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('co-tax').textContent = formatCurrency(tax);
+            document.getElementById('co-total').textContent = formatCurrency(subtotal + tax);
+
+            // Toggle credit card fields
+            document.getElementById('paymentMethod').addEventListener('change', function(e) {
+                const ccInfo = document.getElementById('credit-card-info');
+                if (e.target.value === 'Credit Card') {
+                    ccInfo.classList.remove('d-none');
+                } else {
+                    ccInfo.classList.add('d-none');
+                }
+            });
+            // Initial trigger
+            document.getElementById('paymentMethod').dispatchEvent(new Event('change'));
+        });
+    </script>
+</body>
+</html>

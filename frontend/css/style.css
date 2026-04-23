@@ -1,0 +1,206 @@
+/* PetShop Theme Variables */
+:root {
+    --primary-color: #ff8e8b; /* Soft Coral / Salmon */
+    --secondary-color: #4ecdc4; /* Mint / Teal */
+    --accent-color: #ffe66d; /* Soft Yellow */
+    --text-dark: #2d3436;
+    --text-muted: #636e72;
+    --bg-light: #fdfbfb;
+    --bg-card: #ffffff;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --border-radius-lg: 20px;
+    --border-radius-md: 12px;
+    --border-radius-sm: 8px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', 'Nunito', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+
+/* Custom Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #ff7675;
+    border-color: #ff7675;
+    box-shadow: 0 5px 15px rgba(255, 142, 139, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.product-card .card-img-top {
+    height: 200px;
+    object-fit: contain;
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--primary-color) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-brand i {
+    font-size: 1.8rem;
+}
+
+.nav-link {
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+}
+
+.cart-icon {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.02);
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    margin-top: auto;
+}
+
+/* Auth Pages Split Layout */
+.auth-split {
+    min-height: 100vh;
+    display: flex;
+}
+.auth-img {
+    flex: 1;
+    background-image: url('https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+    background-size: cover;
+    background-position: center;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    position: relative;
+}
+.auth-img::after {
+    content: '';
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: linear-gradient(rgba(255,142,139,0.3), rgba(78,205,196,0.3));
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+.auth-form-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    background: white;
+    padding: 2.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+}
+@media (max-width: 991px) {
+    .auth-img { display: none; }
+    .auth-form-wrapper { background-color: var(--bg-light); }
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem 1rem;
+    border-color: #e2e8f0;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(255, 142, 139, 0.25);
+}
+.input-group-text {
+    background-color: transparent;
+    border-color: #e2e8f0;
+    color: var(--text-muted);
+}
+
+/* Utilities */
+.text-primary-custom {
+    color: var(--primary-color);
+}
+.bg-primary-custom {
+    background-color: var(--primary-color);
+    color: white;
+}

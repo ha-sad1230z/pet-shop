@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - PetShop</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Nunito:wght@700;800&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="auth-split">
+        <!-- Image Section -->
+        <div class="auth-img">
+            <!-- Image loaded via CSS -->
+        </div>
+
+        <!-- Form Section -->
+        <div class="auth-form-wrapper">
+            <div class="auth-card">
+                <div class="text-center mb-4">
+                    <a href="index.html" class="text-decoration-none">
+                        <h2 class="navbar-brand justify-content-center mb-3">
+                            <i class="fa-solid fa-paw text-primary-custom"></i> PetShop
+                        </h2>
+                    </a>
+                    <h4>Chào mừng trở lại!</h4>
+                    <p class="text-muted">Vui lòng đăng nhập vào tài khoản của bạn.</p>
+                </div>
+
+                <div id="loginAlert" class="alert alert-danger d-none" role="alert"></div>
+
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-semibold">Tên đăng nhập</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-regular fa-user"></i></span>
+                            <input type="text" class="form-control" id="username" required placeholder="Nhập username"
+                                autocomplete="username">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-semibold">Mật khẩu</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" class="form-control" id="password" required
+                                placeholder="Nhập mật khẩu" autocomplete="current-password">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label text-muted" for="rememberMe">Ghi nhớ đăng nhập</label>
+                        </div>
+                        <a href="forgot-password.html" class="text-decoration-none text-primary-custom fw-semibold">Quên
+                            mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Đăng nhập</button>
+                    <p class="text-center text-muted mb-0">Chưa có tài khoản? <a href="register.html"
+                            class="text-decoration-none text-primary-custom fw-semibold">Đăng ký tại đây</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const alertBox = document.getElementById('loginAlert');
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+            alertBox.classList.add('d-none');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang đăng nhập...';
+
+            try {
+                await loginAPI(username, password);
+                const user = getCurrentUser();
+                if (user) {
+                    const role = user.role.toUpperCase();
+                    if (role === 'ADMIN' || role === 'STAFF') {
+                        window.location.href = 'admin-dashboard.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }
+            } catch (error) {
+                alertBox.textContent = error.message || 'Đăng nhập thất bại. Vui lòng thử lại!';
+                alertBox.classList.remove('d-none');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Đăng nhập';
+            }
+        });
+    </script>
+</body>
+
+</html>
